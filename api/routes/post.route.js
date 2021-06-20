@@ -3,8 +3,22 @@ const router = express.Router();
 
 const controller = require('../controllers/post.controller')
 
-router.get('/', (req,res) => {
-    res.send("welcome!")
-})
+//create a post
+router.post('/', controller.handleCreatePost)
+
+//update a post
+router.put('/:id', controller.handleUpdatePost)
+
+//delete a post
+router.delete('/:id', controller.handleDeletePost)
+
+//like a post
+router.put('/:id/like', controller.handleLikePost)
+
+//get a post
+router.get('/:id', controller.handleGetPost)
+
+//get all posts
+router.get('/timeline/all', controller.handleGetAllPost)
 
 module.exports = router
