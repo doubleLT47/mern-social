@@ -1,12 +1,25 @@
+require('dotenv').config();
+
 const express = require('express');
-const mongoose = require('mongoose');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
 const helmet = require('helmet');
 
-dotenv.config();
 const app = express();
 
+const db = require('./config/db');
+const route = require('./routes')
+
+db.connect();
+
 const port = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: false
+}));
+app.use(morgan('common'));
+app.use(helmet());
+
+route(app)
 
 app.listen(port, ()=> console.log('Server is running!'));
