@@ -13,13 +13,14 @@ const Post = ({post}) => {
         setLike(isLike ? like - 1 : like + 1);
         setIsLike(!isLike);
     }
+    const public_folder = process.env.REACT_APP_PUBLIC_FOLDER;
 
     return (
         <div className="post">
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
-                        <img src={Users.filter((user) => user.id === post.userId)[0].profilePicture} alt="" className="postProfileImg" />
+                        <img src={public_folder+Users.filter((user) => user.id === post.userId)[0].profilePicture} alt="" className="postProfileImg" />
                         <span className="postUsername">
                             {Users.filter((user) => user.id === post.userId)[0].username}
                         </span>
@@ -31,12 +32,12 @@ const Post = ({post}) => {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post?.desc}</span>
-                    <img src={post.photo} alt="" className="postImg" />
+                    <img src={public_folder+post.photo} alt="" className="postImg" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                    <img className="likeIcon" src="./assets/like.png" alt="" onClick={likeHandle}/>
-                    <img className="likeIcon" src="./assets/heart.png" alt="" onClick={likeHandle} />
+                    <img className="likeIcon" src={`${public_folder}/like.png`} alt="" onClick={likeHandle}/>
+                    <img className="likeIcon" src={`${public_folder}/heart.png`} alt="" onClick={likeHandle} />
                     <span className="pótLikeCounter">{like} people like it</span>
                     </div>
                     <div className="postBottomRight">

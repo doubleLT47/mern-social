@@ -79,7 +79,7 @@ module.exports.handleGetPost = async (req, res) => {
 //get all posts
 module.exports.handleGetAllPost = async (req, res) => {
     try {
-        const currentUser = await User.findById(req.body.userId);
+        const currentUser = await User.findById(req.params.userId);
         //Get userPost
         const userPosts = await Post.find({ userId: currentUser._id });
         const friendPosts = await Promise.all(
@@ -88,7 +88,7 @@ module.exports.handleGetAllPost = async (req, res) => {
             return Post.find({ userId: friendId });
           })
         );
-        res.json(userPosts.concat(...friendPosts))
+        res.status(200).json(userPosts.concat(...friendPosts))
       } catch (err) {
         res.status(500).json(err);
       }

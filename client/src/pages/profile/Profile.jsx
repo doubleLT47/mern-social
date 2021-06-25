@@ -7,6 +7,8 @@ import Newfeed from '../../components/newfeed/Newfeed';
 import Rightbar from '../../components/rightbar/Rightbar';
 
 const Profile = () => {
+
+    const public_folder = process.env.REACT_APP_PUBLIC_FOLDER;
     return (
         <>
             <Topbar />
@@ -15,8 +17,8 @@ const Profile = () => {
                 <div className="profileRight">
                     <div className="profileRightTop">
                         <div className="profileCover">
-                            <img src="./assets/person/3.jpg" alt="" className="profileCoverImg" />
-                            <img src="./assets/person/1.jpg" alt="" className="profileUserImg" />
+                            <img src={`${public_folder}/person/3.jpg`} alt="" className="profileCoverImg" />
+                            <img src={`${public_folder}/person/1.jpg`} alt="" className="profileUserImg" />
                         </div>
                         <div className="profileInfo">
                             <h4 className="profileInfoName">Nguyễn Thành Luân</h4>
