@@ -18,6 +18,9 @@ router.put('/:id/like', controller.handleLikePost)
 //get a post
 router.get('/:id', controller.handleGetPost)
 
+//get user's all posts
+router.get('/profile/:username', controller.handleGetAllPostOfUser)
+
 //get all posts
 router.get('/timeline/:userId', controller.handleGetAllPost)
 

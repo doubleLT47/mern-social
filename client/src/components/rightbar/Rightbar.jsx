@@ -3,7 +3,7 @@ import "./Rightbar.css"
 import { Users } from "../../dynamicData"
 import Online from "../online/Online"
 
-const Rightbar = ({profile}) => {
+const Rightbar = ({user}) => {
     const public_folder = process.env.REACT_APP_PUBLIC_FOLDER;
 
     const HomeRightbar = () => {
@@ -29,22 +29,22 @@ const Rightbar = ({profile}) => {
     const ProfileRightbar = () =>{
         return (
             <>
-                <h4 className="rightbarTitle">User information</h4>
+                <h4 className="rightbarTitle">{user.username} information</h4>
                 <div className="rightbarInfo">
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">City:</span>
-                        <span className="rightbarInfoValue">Đak Lak</span>
+                        <span className="rightbarInfoValue">{user.city}</span>
                     </div>
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">From:</span>
-                        <span className="rightbarInfoValue">Thanh Hóa</span>
+                        <span className="rightbarInfoValue">{user.from}</span>
                     </div>
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">Relationship:</span>
-                        <span className="rightbarInfoValue">Single</span>
+                        <span className="rightbarInfoValue">{user.relationship === 1 ? "Single" : user.relationship === 2 ? "married" : "-"}</span>
                     </div>
                 </div>
-                <h4 className="rightbarTitle">User friends</h4>
+                <h4 className="rightbarTitle">{user.username} friends</h4>
                 <div className="rightbarFollowings">
                     <div className="rightbarFollowing">
                         <img src={`${public_folder}/person/2.jpg`} alt="" className="rightbarFollowingImg" />
@@ -86,7 +86,7 @@ const Rightbar = ({profile}) => {
     return (
         <div className="rightbar">
             <div className="rightbarWrapper">
-                {profile ? <ProfileRightbar /> : <HomeRightbar />}
+                {user ? <ProfileRightbar /> : <HomeRightbar />}
             </div>
         </div>
     )
