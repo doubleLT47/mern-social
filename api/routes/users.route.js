@@ -9,6 +9,8 @@ router.put('/:id', controller.handleUpdateUser);
 router.delete('/:id', controller.handleDeleteUser);
 //get a user
 router.get('/', controller.handleGetUser);
+//get friends
+router.get('/friends/:userId', controller.handleGetFriends)
 //follow a user
 router.put('/:id/follow', controller.handleFollowUser)
 //un follow a user
