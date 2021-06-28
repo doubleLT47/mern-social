@@ -1,6 +1,5 @@
 import "./Rightbar.css"
 
-import { Users } from "../../dynamicData"
 import Online from "../online/Online";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
@@ -60,7 +59,7 @@ const Rightbar = ({ user }) => {
                 <img src={`${public_folder}/ad.png`} alt="" className="rightbarAd" />
                 <h4 className="rightbarTitle">Online friends</h4>
                 <ul className="rightbarFriendList">
-                    {Users.map((user => (
+                    {friends.map((user => ( 
                         <Online key={user.id} user={user} />
                     )))}
                 </ul>

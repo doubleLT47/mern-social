@@ -11,7 +11,6 @@ import  { RssFeed,
     School 
 } from "@material-ui/icons";
 import CloseFriend from "../closeFriend/CloseFriend";
-import { Users } from "../../dynamicData"
 
 const Sidebar = () => {
     return (
@@ -58,9 +57,9 @@ const Sidebar = () => {
                 <button className="sidebarButton">Show more</button>
                 <hr className="sidebarHr"/>
                 <ul className="sidebarFriendList">
-                   {Users.map(user => (
+                   {/* {Users.map(user => (
                        <CloseFriend user={user} />
-                   ))}
+                   ))} */}
                 </ul>
             </div>
         </div>
