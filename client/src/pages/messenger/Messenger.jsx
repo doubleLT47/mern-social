@@ -9,14 +9,40 @@ import Message from '../../components/message/Message';
 import ChatOnline from '../../components/chatOnline/ChatOnline';
 import { AuthContext } from '../../context/AuthContext';
 import axios from "axios";
+import { io } from "socket.io-client"
 
 const Messenger = () => {
     const { user } = useContext(AuthContext) ;
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
-    const [messages, setMessages] = useState([])
-    const [newMessage, setNewMessage] = useState("")
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState("");
+    const [arrivalMessage, setArrivalMessage] = useState(null);
+    const [onlineUsers, setOnlineUsers] = useState([]);
+    const socket = useRef();
     const scrollRef = useRef();
+
+    useEffect(() => {
+        socket.current = io("http://localhost:3300");
+        socket.current.on('get-message', (data) => {
+            setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: Date.now()
+            })
+        })
+    },[]);
+
+    useEffect(() => {
+        arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && setMessages((prev) => [...prev, arrivalMessage])
+    }, [arrivalMessage, currentChat])
+
+    useEffect(() => {
+        socket.current.emit("add-user", user._id);
+        socket.current.on("get-users", users=> {
+            setOnlineUsers(user.followings.filter(f => users.some(u=> u.userId === f)))
+        })
+    },[user])
 
     useEffect(() => {
         const fetchConversations = async () => {
@@ -51,6 +77,15 @@ const Messenger = () => {
             text: newMessage,
             conversationId: currentChat._id
         };
+
+        const receiverId = currentChat.members.find(member => member !== user._id);
+
+        socket.current.emit('send-message', {
+            senderId: user._id,
+            receiverId: receiverId,
+            text: newMessage
+        })
+
         try {
             const res = await axios.post("/message", message);
 
@@ -111,7 +146,7 @@ const Messenger = () => {
                 </div>
                 <div className="chat-online">
                     <div className="chat-online-wrapper">
-                            <ChatOnline />
+                            <ChatOnline onlineUsers={onlineUsers} currentId={user._id} setCurrentChat={setCurrentChat}/>
                     </div>
                 </div>
             </div>
